@@ -8,6 +8,8 @@
 using namespace std;
 
 const int INITIAL_CARS = 2;
+const int LEAVE_CHANCE = 55;
+const int PERCENT = 100;
 
 int main() {
     srand(time(0));
@@ -30,16 +32,48 @@ int main() {
     }
 
     cout << endl;
-
     
-    // Test accessing the first car
-    cout << "First car: ";
-    cars.front().print();
+    // Run the simulation until the queue is empty
+    int time = 0;
 
-    // Test removing the first car
-    cars.pop_front();
+    while (!cars.empty()) {
+        time++;
 
-    cout << "Cars remaining: " << cars.size() << endl;
+        // Generate a random number from 0 to 99
+        int chance = rand() % PERCENT;
+
+        if (chance < LEAVE_CHANCE) {
+            // The first car pays and leaves the lane
+            cout << "Time: " << time << " Operation: Car paid: ";
+            cars.front().print();
+
+            cars.pop_front();
+        }
+        else {
+            // A new car joins the end of the lane
+            Car newCar;
+            cars.push_back(newCar);
+
+            cout << "Time: " << time
+                 << " Operation: Joined lane: ";
+            newCar.print();
+        }
+
+        // Display the queue after each time period
+        cout << "Queue:" << endl;
+
+        if (cars.empty()) {
+            cout << "    Empty" << endl;
+        }
+        else {
+            for (int i = 0; i < cars.size(); i++) {
+                cout << "    ";
+                cars[i].print();
+            }
+        }
+
+        cout << endl;
+    }
 
     return 0;
 }

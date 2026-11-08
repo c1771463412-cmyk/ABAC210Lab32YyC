@@ -1,4 +1,4 @@
-// COMSC-210-5293 | Lab 32 | Yuyi Chen
+// COMSC-210-5293 | Lab 33 | Yuyi Chen
 
 #include <iostream>
 #include <deque>
@@ -10,70 +10,31 @@ using namespace std;
 const int INITIAL_CARS = 2;
 const int LEAVE_CHANCE = 55;
 const int PERCENT = 100;
+const int NUM_LANES = 4;
 
 int main() {
     srand(time(0));
-
-    // Create a deque to store cars in the toll booth lane
-    deque<Car> cars;
-
-    // Add two cars to the initial queue
-    for (int i = 0; i < INITIAL_CARS; i++) {
-        Car newCar;
-        cars.push_back(newCar);
-    }
-
-    // Display the initial queue
-    cout << "Initial queue:" << endl;
-
-    for (int i = 0; i < cars.size(); i++) {
-        cout << "    ";
-        cars[i].print();
-    }
-
-    cout << endl;
     
-    // Run the simulation until the queue is empty
-    int time = 0;
+    // Create an array of deques for four toll booth lanes
+    deque<Car> lanes[NUM_LANES];
 
-    while (!cars.empty()) {
-        time++;
-
-        // Generate a random number from 0 to 99
-        int chance = rand() % PERCENT;
-
-        if (chance < LEAVE_CHANCE) {
-            // The first car pays and leaves the lane
-            cout << "Time: " << time << " Operation: Car paid: ";
-            cars.front().print();
-
-            cars.pop_front();
-        }
-        else {
-            // A new car joins the end of the lane
-            Car newCar;
-            cars.push_back(newCar);
-
-            cout << "Time: " << time
-                 << " Operation: Joined lane: ";
-            newCar.print();
-        }
-
-        // Display the queue after each time period
-        cout << "Queue:" << endl;
-
-        if (cars.empty()) {
-            cout << "    Empty" << endl;
-        }
-        else {
-            for (int i = 0; i < cars.size(); i++) {
-                cout << "    ";
-                cars[i].print();
-            }
-        }
-
-        cout << endl;
+    // Test adding a car to each lane
+    for (int i = 0; i < NUM_LANES; i++) {
+        Car newCar;
+        lanes[i].push_back(newCar);
     }
+
+    // Test displaying the first car in each lane
+    for (int i = 0; i < NUM_LANES; i++) {
+        cout << "Lane " << i + 1 << ": ";
+        lanes[i].front().print();
+    }
+
+    // Test removing a car from the first lane
+    lanes[0].pop_front();
+
+    cout << "Lane 1 size: " << lanes[0].size() << endl;
+    cout << "Lane 2 size: " << lanes[1].size() << endl;
 
     return 0;
 }

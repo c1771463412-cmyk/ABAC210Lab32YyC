@@ -18,23 +18,27 @@ int main() {
     // Create an array of deques for four toll booth lanes
     deque<Car> lanes[NUM_LANES];
 
-    // Test adding a car to each lane
+    // Add two cars to each toll booth lane
     for (int i = 0; i < NUM_LANES; i++) {
-        Car newCar;
-        lanes[i].push_back(newCar);
+        for (int j = 0; j < INITIAL_CARS; j++) {
+            Car newCar;
+            lanes[i].push_back(newCar);
+        }
     }
 
-    // Test displaying the first car in each lane
+    // Display the initial queue for all lanes
+    cout << "Initial queue:" << endl;
+
     for (int i = 0; i < NUM_LANES; i++) {
-        cout << "Lane " << i + 1 << ": ";
-        lanes[i].front().print();
+        cout << "Lane " << i + 1 << ":" << endl;
+
+        for (int j = 0; j < lanes[i].size(); j++) {
+            cout << "    ";
+            lanes[i][j].print();
+        }
     }
 
-    // Test removing a car from the first lane
-    lanes[0].pop_front();
-
-    cout << "Lane 1 size: " << lanes[0].size() << endl;
-    cout << "Lane 2 size: " << lanes[1].size() << endl;
+    cout << endl;
 
     return 0;
 }
